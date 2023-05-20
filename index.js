@@ -1,4 +1,14 @@
 const container=document.querySelector(".card-container");
+const modal=document.querySelector(".modal");
+const cerrarModal=document.querySelector(".modal_close")
+const gameover=document.querySelector(".game_over")
+const cuadro=document.querySelector(".cuadro")
+const inicio=document.querySelector(".newgame")
+const start=document.querySelector(".modal_close")
+const user=document.querySelector("#name")
+const info=document.querySelector(".usuario")
+const timer=document.querySelector(".tiempo")
+
 
 const imagenes=[
     { name: "saman", image: "img/saman.jpg" },
@@ -11,37 +21,98 @@ const imagenes=[
   { name: "senet", image: "img/senet.jpg" }
 ];
 
-//const colores=["blue","yellow","red","cyan","green","brown","purple","orange"]
-const pares=[...imagenes,...imagenes];
+window.addEventListener("load", ()=>{
+    inicializar()
+     setTimeout(
+     ()=>{modal.showModal()},100
+                )
 
-//const pares=[...colores,...colores]
+    })
 
-const numtarjetas= pares.length  
-console.log(pares.length)
+window.onkeydown = function(e){
+    if(e.keyCode === 27){ 
+        e.preventDefault();
+    }
+}; 
+
+inicio.addEventListener("click",()=>{
+    seconds=59
+    minutes=3
+    clearInterval(interval);
+    modal.showModal()
+})
+
+start.addEventListener("click", ()=>{
+
+    if(user.value!=""){
+    setTimeout( ()=> {
+        info.innerHTML=`<h3>Nombre de usuario: ${user.value} </h3>`}
+        ,1000)
+    seconds=59;
+    minutes=3;
+    interval = setInterval(Timer, 1000);  
+    inicializar()
+    }  
+})
+
+
+//const pares=[...imagenes,...imagenes];
+
+let seconds = 59,
+minutes = 3;
+
+const numtarjetas= imagenes.length *2 ;
+let escogido=false;
 let esperar=false;
 let tarjetaabierta;
+let tarjetaabierta2;
+let match;
 let contadortarjetas=0;
+
+function inicializar() {
+    const cartas=mezclar()
+    tabla(cartas)
+}
+
+const Timer=() => {
+    seconds -= 1;
+  //minutes logic
+  if (seconds == 0) {
+    minutes -= 1;
+    seconds=59;}
+
+  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
+  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+  timer.innerHTML = `<h3>Tiempo: ${minutesValue}:${secondsValue}</h3>`;
+
+}
 
 
 function mezclar() {
-
+    const pares=[...imagenes,...imagenes];
     const cartas=[];
     for (let i=0; i<numtarjetas ; i++ ) {
-
         const indice=Math.floor(Math.random()*pares.length);
         cartas.push(pares[indice]);
         pares.splice(indice,1);
     }
-    console.log(cartas)
     return cartas;
 }
-const cartas=mezclar()
 
-tabla(cartas)
+//const cartas=mezclar()
+
+//tabla(cartas)
 
 
 function tabla(cartas) {
+    let escogido=false;
+    let esperar=false;
+    let tarjetaabierta;
+    let tarjetaabierta2;
+    let match;
+    let contadortarjetas=0;
     container.innerHTML="";
+    
 
     for(let i=0; i< 4*4; i++) {
 
@@ -56,16 +127,63 @@ function tabla(cartas) {
      `;
 
     }
-    
-    container.style.gridTemplateColumns = `repeat(${4},auto)`;
+    container.style.margin="auto";
+
 
     let cards = document.querySelectorAll(".card");
-    console.log(cards)
+ 
     cards.forEach(
         (card)=> {
             card.addEventListener("click",
                 ()=>{
-                    card.classList.add("flipped");
+                    //todo esto aplicara para cartas que no tenga pareja
+                    if (!card.classList.contains("emparejada")) {
+
+                        if(!esperar) {
+                        card.classList.add("flipped");
+                        //si la carta clickeada es la primera
+                        if (!escogido) {
+                          //la clickeada es la tarjeta abierta
+                          tarjetaabierta = card;
+                          //el nombre de la tarjeta
+                          match = card.getAttribute("data-card-value");
+
+                          escogido=true;
+                        } else { //si la clickeada es la segunda
+                          //secondCard and value
+                          tarjetaabierta2 = card;
+                          esperar=true;
+                          let match2 = card.getAttribute("data-card-value");
+                          if (match == match2) {
+                           
+                            tarjetaabierta.classList.add("matched");
+                            tarjetaabierta2.classList.add("matched");
+                            setTimeout(()=>{esperar=false},900)
+                            escogido = false;
+                            contadortarjetas += 1;
+                            
+                            if (contadortarjetas == (numtarjetas/ 2)) {
+                            
+                              gameover.innerHTML += `<h2>Juego Terminado</h2>
+                              <h3>Felicidades haz ganado</h3>`;
+                              //stopGame();
+                            }
+                          } else {
+                            //if the cards dont match
+                            //flip the cards back to normal
+                            let [tempFirst, tempSecond] = [tarjetaabierta, tarjetaabierta2];
+                            escogido=false;
+                            tarjetaabierta = null;
+                            tarjetaabierta2 = null;
+                             setTimeout(() => {
+                              tempFirst.classList.remove("flipped");
+                              tempSecond.classList.remove("flipped");
+                              esperar=false;
+                            }, 900);
+                          }
+                        }
+                      }
+                    }
                 }
             )
         }
@@ -115,10 +233,6 @@ function tabla(cartas) {
 // //let movimiento=false;
 
 
-// /*window.addEventListener("load", ()=>{
 
-//     setTimeout(
-//         ()=>{modal.showModal()},1000
-//     )
-            
-//     }) */
+
+
