@@ -43,6 +43,8 @@ inicio.addEventListener("click",()=>{
     faltante=180;
     clearInterval(interval);
     gameover.innerHTML ="";
+    textpuntaje.innerHTML="<h3>Puntaje:</h3>";
+    puntaje=100;
     modal.showModal()
 })
 
@@ -71,6 +73,8 @@ start.addEventListener("click", ()=>{
 let seconds = 59,
 minutes = 3;
 let faltante=180;
+let puntaje;
+let puntuación_máxima=100;
 const numtarjetas= imagenes.length *2 ;
 let escogido=false;
 let esperar=false;
@@ -174,24 +178,20 @@ function tabla(cartas) {
 
                           escogido=true;
                         } else { //si la clickeada es la segunda
-                          //secondCard and value
                           tarjetaabierta2 = card;
                           esperar=true;
                           let match2 = card.getAttribute("data-card-value");
                           if (match == match2) {
                            
-                            tarjetaabierta.classList.add("matched");
-                            tarjetaabierta2.classList.add("matched");
-                            setTimeout(()=>{esperar=false},900)
+                            tarjetaabierta.classList.add("emparejada");
+                            tarjetaabierta2.classList.add("emparejada");
+                            setTimeout(()=>{esperar=false},1000)
                             escogido = false;
                             contadortarjetas += 1;
                             
                             if (contadortarjetas == (numtarjetas/ 2)) {
-                                clearInterval(interval);
-                              gameover.innerHTML += `<h2>Juego Terminado</h2>
-                              <h3>Felicidades haz ganado</h3>`;
+                                victoria()
                               esperar=true;
-                              //stopGame();
                             }
                           } else {
                             //if the cards dont match
@@ -229,6 +229,15 @@ function tabla(cartas) {
 
 }
 
+
+function victoria() {
+
+    clearInterval(interval);
+    gameover.innerHTML += `<h2>Juego Terminado</h2>
+    <h3>Felicidades haz ganado</h3>`;
+    puntaje=Math.round(puntuación_máxima * (faltante / 180))
+    textpuntaje.innerHTML=`<h3>Puntaje: ${puntaje}</h3>`
+}
 
 //<img src="img/logo.jpg" width="50px class="image"/>
 
