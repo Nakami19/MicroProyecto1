@@ -76,9 +76,11 @@ body{
     margin: 40px auto;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4,auto);
+    grid-template-columns: repeat(3,auto);
     gap: 0.6em;
-
+    @media screen and (min-width: 1024px) { 
+      grid-template-columns: repeat(4,auto);  
+    }
     @media screen and (max-width:767px) { 
         padding: 10px;
         width: 100%;
