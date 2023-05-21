@@ -15,14 +15,14 @@ const agregarmodal2=document.querySelector(".tabla_puntajes")
 const salir=document.querySelector(".salir")
 
 const imagenes=[
-    { name: "saman", image: "img/saman.jpg" },
-  { name: "biblioteca", image: "img/biblioteca.jpg" },
-  { name: "eugenio", image: "img/eugenio.jpg" },
-  { name: "ceis", image: "img/ceis.jpg" },
-  { name: "little_miss", image: "img/little_miss.jpg" },
-  { name: "metrotech", image: "img/metrotech.jpg" },
-  { name: "pelusa", image: "img/pelusa.jpg" },
-  { name: "senet", image: "img/senet.jpg" }
+    { name: "saman", imagen: "img/saman.jpg" },
+  { name: "biblioteca", imagen: "img/biblioteca.jpg" },
+  { name: "eugenio", imagen: "img/eugenio.jpg" },
+  { name: "ceis", imagen: "img/ceis.jpg" },
+  { name: "little_miss", imagen: "img/little_miss.jpg" },
+  { name: "metrotech", imagen: "img/metrotech.jpg" },
+  { name: "pelusa", imagen: "img/pelusa.jpg" },
+  { name: "senet", imagen: "img/senet.jpg" }
 ];
 
 window.addEventListener("load", ()=>{
@@ -30,6 +30,7 @@ window.addEventListener("load", ()=>{
      setTimeout(
      ()=>{modal.showModal()},100
                 )
+
     })
 
 window.onkeydown = function(e){
@@ -199,7 +200,7 @@ function tabla(cartas) {
         <img src="img/logo.jpg"  class="image"/>
         </div>
         <div class="back">
-        <img src="${cartas[i].image}"  class="image"/></div>
+        <img src="${cartas[i].imagen}"  class="image"/></div>
      </div>
      `;
 
