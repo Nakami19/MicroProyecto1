@@ -134,15 +134,8 @@ function guardar() {
 function cargar() {
     antiguos=JSON.parse(localStorage.getItem("users"))
     if(antiguos!=null) {
-        usuarios=JSON.parse(localStorage.getItem("users"));
-        usuarios.forEach((o) => {
-            console.log("lo de abajo es parte de la lista")
-            console.log(o)
-            console.log("final")
-        });
-        // console.log("COMO VEO ESTO "+usuarios)
+        usuarios=JSON.parse(localStorage.getItem("users"))
 }
-
 
 }
 
