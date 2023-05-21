@@ -6,8 +6,7 @@
     box-sizing: border-box;
 }
 body{
-    /*background: linear-gradient(#0B3954,#087E8B);*/
-    background-color: black;
+    background: linear-gradient(#0B3954,#087E8B);
 }
 @media screen and (max-width: 767px) {
     .todo{
@@ -53,11 +52,10 @@ body{
 
 .cuadro{
     box-sizing: content-box;
-    @media screen and (min-width: 1024px) {
     margin-left: 30%;
     width: 500px;
     height: 450px;
-    }
+
     @media screen and (max-width:767px) { 
             height: 450px;
             width: 0;
@@ -69,14 +67,11 @@ body{
         margin-left: 20%;
         margin-top: 10%;
         margin-bottom: 12%;
-        width: 500px;
-    height: 450px;
     }
 } 
 
 .card-container{
-    @media screen and (min-width: 1024px) {
-position: relative;
+    position: relative;
     padding: 10px;
     margin: 40px auto;
     width: 100%;
@@ -84,13 +79,8 @@ position: relative;
     grid-template-columns: repeat(4,auto);
     gap: 0.6em;
 
-    }
-    
-
     @media screen and (max-width:767px) { 
-        position: relative;
         padding: 10px;
-        margin: 40px auto;
         width: 100%;
         display: grid;
         grid-template-columns: repeat(3,auto);
@@ -110,7 +100,7 @@ position: relative;
 @media screen and (max-width:767px) { 
         height: 7vh;
         width: 40%;
-        font-size:0%;
+        font-size:100%;
         display:flex;
         align-items:center;
 
@@ -277,7 +267,7 @@ position: relative;
     height: 10vh;
 
 @media screen and (max-width:767px) { 
-        font-size:60%;
+        font-size:80%;
     }
 @media screen and (min-width:767px) and (max-width:1023px) {
     font-size: 20px;
