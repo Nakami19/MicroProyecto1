@@ -10,7 +10,6 @@ const info=document.querySelector(".usuario")
 const timer=document.querySelector(".tiempo")
 const textpuntaje=document.querySelector(".puntaje")
 
-
 const imagenes=[
     { name: "saman", image: "img/saman.jpg" },
   { name: "biblioteca", image: "img/biblioteca.jpg" },
@@ -23,8 +22,8 @@ const imagenes=[
 ];
 
 window.addEventListener("load", ()=>{
+    localStorage.clear()
     textpuntaje.classList.remove("show")
-    //inicializar()
      setTimeout(
      ()=>{modal.showModal()},100
                 )
@@ -38,13 +37,12 @@ window.onkeydown = function(e){
 }; 
 
 inicio.addEventListener("click",()=>{
-    seconds=59
-    minutes=3
-    faltante=180;
+
     clearInterval(interval);
     gameover.innerHTML ="";
     textpuntaje.innerHTML="<h3>Puntaje:</h3>";
-    puntaje=100;
+    puntaje=0;
+    guardar()
     modal.showModal()
 })
 
@@ -63,17 +61,17 @@ start.addEventListener("click", ()=>{
     minutes=3;
     faltante=180;
     interval = setInterval(Timer, 1000);  
+    cargar();
+
     
     }  
 })
 
 
-//const pares=[...imagenes,...imagenes];
-
 let seconds = 59,
 minutes = 3;
 let faltante=180;
-let puntaje;
+let puntaje=0;
 let puntuación_máxima=100;
 const numtarjetas= imagenes.length *2 ;
 let escogido=false;
@@ -82,6 +80,25 @@ let tarjetaabierta;
 let tarjetaabierta2;
 let match;
 let contadortarjetas=0;
+let usuarios=[];
+function guardar() {
+    usuarios.push({nombre:user.value
+    , puntuacion:puntaje  
+    })
+    localStorage.setItem("users",JSON.stringify(usuarios))
+
+}
+
+function cargar() {
+    antiguos=JSON.parse(localStorage.getItem("users"))
+    if(antiguos!=null) {
+        usuarios=JSON.parse(localStorage.getItem("users"));
+        usuarios.forEach(o => console.log(o));
+        console.log("COMO VEO ESTO "+usuarios)
+}
+
+
+}
 
 function inicializar() {
     const cartas=mezclar()
@@ -92,7 +109,6 @@ function inicializar() {
 const Timer=() => {
     seconds -= 1;
     faltante-=1
-  //minutes logic
 
 if( faltante==0) {
        clearInterval(interval);
@@ -126,10 +142,6 @@ function mezclar() {
     }
     return cartas;
 }
-
-//const cartas=mezclar()
-
-//tabla(cartas)
 
 
 function tabla(cartas) {
@@ -166,7 +178,6 @@ function tabla(cartas) {
                 if(faltante>0) {
                     //todo esto aplicara para cartas que no tenga pareja
                     if (!card.classList.contains("emparejada")) {
-                        console.log(esperar)
                         if(!esperar) {
                         card.classList.add("flipped");
                         //si la carta clickeada es la primera
