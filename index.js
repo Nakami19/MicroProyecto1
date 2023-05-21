@@ -30,7 +30,6 @@ window.addEventListener("load", ()=>{
      setTimeout(
      ()=>{modal.showModal()},100
                 )
-
     })
 
 window.onkeydown = function(e){
@@ -62,9 +61,9 @@ start.addEventListener("click", ()=>{
         
     }
         ,1000)
-    seconds=60;
-    minutes=2;
-    faltante=180;
+    seconds=0;
+    minutes=3;
+    faltante=178;
     interval = setInterval(Timer, 1000);  
     cargar();
 
@@ -92,9 +91,9 @@ salir.addEventListener("click",()=>{
 })
 
 
-let seconds = 60,
-minutes = 2;
-let faltante=180;
+let seconds = 0,
+minutes = 3;
+let faltante=178;
 let puntaje=0;
 let puntuación_máxima=100;
 const numtarjetas= imagenes.length *2 ;
@@ -154,7 +153,10 @@ function inicializar() {
 }
 
 const Timer=() => {
+    if(seconds>0){
     seconds -= 1;
+    }
+
     faltante-=1
 
 if( faltante==0) {
@@ -219,27 +221,28 @@ function tabla(cartas) {
             card.addEventListener("click",
                 ()=>{
                 if(faltante>0) {
-                    //todo esto aplicara para cartas que no tenga pareja
+                   
                     if (!card.classList.contains("emparejada")) {
                         if(!esperar) {
                         card.classList.add("flipped");
-                        //si la carta clickeada es la primera
+                        
                         if (!escogido) {
-                          //la clickeada es la tarjeta abierta
+                          
                           tarjetaabierta = card;
-                          //el nombre de la tarjeta
+                          
                           match = card.getAttribute("data-card-value");
 
                           escogido=true;
-                        } else { //si la clickeada es la segunda
+                        } else { 
+                           esperar=true; 
                           tarjetaabierta2 = card;
-                          esperar=true;
                           let match2 = card.getAttribute("data-card-value");
+
                           if (match == match2) {
                            
                             tarjetaabierta.classList.add("emparejada");
                             tarjetaabierta2.classList.add("emparejada");
-                            setTimeout(()=>{esperar=false},1000)
+                            setTimeout(()=>{esperar=false},800)
                             escogido = false;
                             contadortarjetas += 1;
                             
@@ -248,8 +251,7 @@ function tabla(cartas) {
                               esperar=true;
                             }
                           } else {
-                            //if the cards dont match
-                            //flip the cards back to normal
+                            
                             let [tempFirst, tempSecond] = [tarjetaabierta, tarjetaabierta2];
                             escogido=false;
                             tarjetaabierta = null;
@@ -258,7 +260,7 @@ function tabla(cartas) {
                               tempFirst.classList.remove("flipped");
                               tempSecond.classList.remove("flipped");
                               esperar=false;
-                            }, 900);
+                            }, 800);
                           }
                         }
                       }
@@ -286,8 +288,7 @@ function tabla(cartas) {
 
 function victoria() {
     clearInterval(interval);
-    gameover.innerHTML += `<h2>Juego Terminado</h2>
-    <h3>Felicidades haz ganado</h3>`;
+    gameover.innerHTML += `<h2 class="mensaje">Juego Terminado, felicidades haz ganado </h2>`;
     puntaje=Math.round(puntuación_máxima * (faltante / 180))
     textpuntaje.innerHTML=`<h3>Puntaje: ${puntaje}</h3>`
     guardar()
@@ -300,50 +301,11 @@ function derrota() {
     guardar()
     clearInterval(interval);
     timer.innerHTML=`<h3>Tiempo: ${00}:${00}</h3>`
-    gameover.innerHTML += `<h2>Juego Terminado</h2>
-                              <h3>Haz perdido, intenta de nuevo</h3>`;
+    gameover.innerHTML += `<h2 class="mensaje">Juego Terminado, haz perdido intenta de nuevo </h2>`;
     puntuaciones.classList.add("show")
 
 }
 
-//<img src="img/logo.jpg" width="50px class="image"/>
-
-// function crear(color) {
-
-//     const element=document.createElement("div")
-//     element.classList.add("card")
-//     element.setAttribute("data-imagen", color)
-
-//     element.addEventListener("click", ()=>{
-//         if(esperar) {
-//             return;
-//         }
-//        // element.style.backgroundImage = imagen
-//         element.style.backgroundColor= color
-
-//         if(!tarjetaabierta) {
-//             tarjetaabierta=element;
-//             return;
-//         }
-
-//         esperar=true;
-
-//         setTimeout(()=>{
-//             element.style.backgroundColor=null;
-//             tarjetaabierta.style.backgroundColor=null;
-//             esperar=false;
-//             tarjetaabierta=null;
-//         },1500)
-
-
-//     })
-
-
-//     return element;
-// }
-
-
-// //let movimiento=false;
 
 
 
