@@ -111,7 +111,6 @@ function repetidos(){
     let repetido=null;
     for(let i = 0; i < usuarios.length; i++) {
         if (usuarios[i].nombre== user.value && usuarios[i].puntuacion==puntaje ) {
-              console.log(usuarios[i].nombre)
               return repetido=usuarios[i];
         }
     }
