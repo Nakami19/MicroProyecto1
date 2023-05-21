@@ -58,8 +58,8 @@ body{
 
     @media screen and (max-width:767px) { 
             height: 450px;
-            width: 300px;
-            margin-left: 7%;
+            width: 250px;
+            margin-left: 3%;
             margin-right: 30px;
             
     }
@@ -144,7 +144,7 @@ body{
     color: #0B3954;
     font-size: 100%;
 @media screen and (max-width:767px) { 
-    font-size: 85%;
+    font-size: 70%;
 }
 
 }
@@ -283,8 +283,8 @@ body{
     background-color: #c0c08e;
 
 @media screen and (max-width:767px) { 
-        height: 6em;
-        width: 6em;
+        height: 4.55em;
+        width: 4.5em;
     } 
 @media screen and (min-width:767px) and (max-width:1023px) {
     height: 7.25em;
