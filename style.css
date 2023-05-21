@@ -35,9 +35,9 @@ body{
     gap: 1em;
 }
 
-.modal_close{
+.salir, .newgame, .puntuaciones, .modal_close{
     text-decoration: none;
-    height: 5vh;
+    height: 7vh;
     width: 20vh;
     color: white;
     background-color: rgb(224, 67, 67);
@@ -45,6 +45,7 @@ body{
     border: 1px solid;
     border-radius: 7px;
     margin-top: 10px;
+    margin-bottom: 5px;
     transition: background-color .3s;
     display: block;
     margin-right: auto;
@@ -54,6 +55,31 @@ body{
 .modal_close:hover{
     color: rgb(224, 67, 67) ;
     background-color: white;
+}
+
+.modal2::backdrop{
+    background-color: rgba(0,0,0,.55);
+
+}
+.modal2{
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 90%;
+    height: 200px;
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 7px;
+    padding: auto;
+}
+.modal2_content{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
 
 .cuadro{
@@ -132,23 +158,7 @@ body{
 
 .game_over{
     padding: 4px;
-    background-color: white;
-    
-}
-
-.newgame{
-    height: 5vh;
-    width: 20vh;
-    color: white;
-    background-color: rgb(224, 67, 67);
-    padding: 1em, 3em;
-    border: 1px solid;
-    border-radius: 7px;
-    margin-top: 10px;
-    transition: background-color .3s;
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
+    background-color: white;  
 }
 
 .newgame:hover {
@@ -166,6 +176,7 @@ body{
 }
 
 .anuncio{
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -174,6 +185,23 @@ body{
 
 
 
+.puntuaciones:hover{
+    color: rgb(224, 67, 67) ;
+    background-color: white;
+
+}
+.salir:hover{
+    color: rgb(224, 67, 67) ;
+    background-color: white;
+
+}
+
+
+.botones{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
 
 
 

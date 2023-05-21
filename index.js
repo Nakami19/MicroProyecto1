@@ -1,14 +1,18 @@
 const container=document.querySelector(".card-container");
 const modal=document.querySelector(".modal");
-const cerrarModal=document.querySelector(".modal_close")
-const gameover=document.querySelector(".anuncio")
-const cuadro=document.querySelector(".cuadro")
-const inicio=document.querySelector(".newgame")
-const start=document.querySelector(".modal_close")
-const user=document.querySelector("#name")
-const info=document.querySelector(".usuario")
-const timer=document.querySelector(".tiempo")
-const textpuntaje=document.querySelector(".puntaje")
+const modal2=document.querySelector(".modal2");
+const cerrarModal=document.querySelector(".modal_close");
+const gameover=document.querySelector(".anuncio");
+const cuadro=document.querySelector(".cuadro");
+const inicio=document.querySelector(".newgame");
+const start=document.querySelector(".modal_close");
+const user=document.querySelector("#name");
+const info=document.querySelector(".usuario");
+const timer=document.querySelector(".tiempo");
+const textpuntaje=document.querySelector(".puntaje");
+const puntuaciones=document.querySelector(".puntuaciones")
+const agregarmodal2=document.querySelector(".tabla_puntajes")
+const salir=document.querySelector(".salir")
 
 const imagenes=[
     { name: "saman", image: "img/saman.jpg" },
@@ -22,7 +26,6 @@ const imagenes=[
 ];
 
 window.addEventListener("load", ()=>{
-    localStorage.clear()
     textpuntaje.classList.remove("show")
      setTimeout(
      ()=>{modal.showModal()},100
@@ -41,8 +44,10 @@ inicio.addEventListener("click",()=>{
     clearInterval(interval);
     gameover.innerHTML ="";
     textpuntaje.innerHTML="<h3>Puntaje:</h3>";
+    puntuaciones.classList.remove("show")
     puntaje=0;
     guardar()
+    user.value="";
     modal.showModal()
 })
 
@@ -57,8 +62,8 @@ start.addEventListener("click", ()=>{
         
     }
         ,1000)
-    seconds=59;
-    minutes=3;
+    seconds=60;
+    minutes=2;
     faltante=180;
     interval = setInterval(Timer, 1000);  
     cargar();
@@ -67,9 +72,28 @@ start.addEventListener("click", ()=>{
     }  
 })
 
+puntuaciones.addEventListener("click",()=>{
+    usuarios=usuarios.sort((a,b)=>{
+        return b.puntuacion-a.puntuacion
+    })
+    usuarios.forEach((o) => {
+      agregarmodal2.innerHTML+=`<p class="modal2_text">${o.nombre}:  ${o.puntuacion}</p>`  
+    } 
 
-let seconds = 59,
-minutes = 3;
+    );
+    modal2.showModal()
+    
+} 
+)
+
+salir.addEventListener("click",()=>{
+    modal2.close()
+    agregarmodal2.innerHTML="";
+})
+
+
+let seconds = 60,
+minutes = 2;
 let faltante=180;
 let puntaje=0;
 let puntuación_máxima=100;
@@ -81,10 +105,29 @@ let tarjetaabierta2;
 let match;
 let contadortarjetas=0;
 let usuarios=[];
+
+
+function repetidos(){
+    let repetido=null;
+    for(let i = 0; i < usuarios.length; i++) {
+        if (usuarios[i].nombre== user.value && usuarios[i].puntuacion==puntaje ) {
+              console.log(usuarios[i].nombre)
+              return repetido=usuarios[i];
+        }
+    }
+    return repetido;
+}
+
 function guardar() {
-    usuarios.push({nombre:user.value
+    let usuario={nombre:user.value
     , puntuacion:puntaje  
-    })
+    }
+    let repetido=repetidos();
+
+    if(repetido==null){
+    usuarios.push(usuario)
+} 
+    
     localStorage.setItem("users",JSON.stringify(usuarios))
 
 }
@@ -93,8 +136,12 @@ function cargar() {
     antiguos=JSON.parse(localStorage.getItem("users"))
     if(antiguos!=null) {
         usuarios=JSON.parse(localStorage.getItem("users"));
-        usuarios.forEach(o => console.log(o));
-        console.log("COMO VEO ESTO "+usuarios)
+        usuarios.forEach((o) => {
+            console.log("lo de abajo es parte de la lista")
+            console.log(o)
+            console.log("final")
+        });
+        // console.log("COMO VEO ESTO "+usuarios)
 }
 
 
@@ -111,12 +158,8 @@ const Timer=() => {
     faltante-=1
 
 if( faltante==0) {
-       clearInterval(interval);
-       timer.innerHTML=`<h3>Tiempo: ${00}:${00}</h3>`
-       gameover.innerHTML += `<h2>Juego Terminado</h2>
-                              <h3>Felicidades haz ganado</h3>`;
+       derrota()
        
-
   }
 
   else if (seconds == 0) {
@@ -242,12 +285,25 @@ function tabla(cartas) {
 
 
 function victoria() {
-
     clearInterval(interval);
     gameover.innerHTML += `<h2>Juego Terminado</h2>
     <h3>Felicidades haz ganado</h3>`;
     puntaje=Math.round(puntuación_máxima * (faltante / 180))
     textpuntaje.innerHTML=`<h3>Puntaje: ${puntaje}</h3>`
+    guardar()
+    puntuaciones.classList.add("show")
+
+
+}
+
+function derrota() {
+    guardar()
+    clearInterval(interval);
+    timer.innerHTML=`<h3>Tiempo: ${00}:${00}</h3>`
+    gameover.innerHTML += `<h2>Juego Terminado</h2>
+                              <h3>Haz perdido, intenta de nuevo</h3>`;
+    puntuaciones.classList.add("show")
+
 }
 
 //<img src="img/logo.jpg" width="50px class="image"/>

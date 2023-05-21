@@ -33,14 +33,17 @@
     <br>
     <br>
     <section class="game_over">
+        <div class="botones">
        <button class="newgame hide">Iniciar nuevo juego</button>
+       <button class="puntuaciones hide">Puntuaciones</button>
+    </div>
        <div class="anuncio">
 
        </div>
     </section>
 
 
-   <dialog class="modal">
+  <dialog class="modal">
         <div class="modal_content">
             <h2 class="modal_title">Bienvenido a Memory Match</h2>
             <p class="modal_text">Por favor ingresa tu nombre antes de empezar a jugar</p>
@@ -49,6 +52,15 @@
                 <button id="cerrar"  type="submit" class="modal_close">Enviar Nombre</button>
             </form>
     </div>
+    </dialog>  
+
+    <dialog class="modal2">
+        <div class="modal2_content">
+            <h2 class="modal2_title">Puntuaciones</h2>
+            <div class="tabla_puntajes"></div>
+            <p class="modal2_text"></p>
+    </div>
+        <button class="salir">Salir</button>
     </dialog> 
 
     <script src="./index.js"></script>
